@@ -1,17 +1,19 @@
 package br.com.icarros.icontas.service;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import br.com.icarros.icontas.dto.request.GerenteRequest;
 import br.com.icarros.icontas.dto.request.GerenteRequestPatch;
 import br.com.icarros.icontas.dto.response.GerenteResponse;
+import br.com.icarros.icontas.dto.response.ListaGerenteResponse;
 import br.com.icarros.icontas.entity.Gerente;
 import br.com.icarros.icontas.exception.GerenteInexistenteException;
 import br.com.icarros.icontas.exception.GerenteJaAtivo;
@@ -73,4 +75,16 @@ public class GerenteService {
     	return modelMapper.map(entity, GerenteResponse.class);
     }
 	
+    public List<ListaGerenteResponse> listaGerente(){
+    	List<Gerente> listaGerente = (List<Gerente>) gerenteRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+    	List<ListaGerenteResponse> listaGerenteResponse = new ArrayList();
+    	for(Gerente g: listaGerente) {
+    		listaGerenteResponse.add(toListaResponse(g));
+    	}
+    	return listaGerenteResponse;
+    }
+    
+    private ListaGerenteResponse toListaResponse(Gerente gerente) {
+    	return modelMapper.map(gerente, ListaGerenteResponse.class);
+    }
 }

@@ -77,8 +77,4 @@ public class CorrentistaController {
 		
 		return correntistaService.listaCorrentista();
 	}
-//	public Page<CorrentistaRequest> listaCorrentista(@PageableDefault(sort = "nome", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao){
-//		Page<CorrentistaRequest> listaCorrentista = correntistaService.findBy
-//		return 		
-//	}
 }
